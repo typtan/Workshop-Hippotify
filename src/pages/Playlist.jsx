@@ -30,7 +30,7 @@ import { timeFormatHMS } from "../utils/timeFormatChange";
 
 export default function Playlist() {
   const ID = useParams().id ? useParams().id : 1;
-  const [newPlaylistTitle, setNewPlatlistTitle] = useState(""); 
+  const [newPlaylistTitle, setNewPlatlistTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
 
   const playList = playListMockUp.find((item) => item.ID === parseInt(ID));
@@ -40,7 +40,7 @@ export default function Playlist() {
 
   const updatePlaylistDetail = () => {
     console.log("Update playlist detail", newPlaylistTitle, newDescription);
-  }
+  };
 
   return (
     <>
@@ -63,76 +63,109 @@ export default function Playlist() {
             boxShadow="0 4px 6px rgba(0, 0, 0, 0.3)"
             borderRadius={"8px"}
           ></Image>
-          <DialogRoot placement={"center"}>
-            <DialogTrigger asChild>
-              <Box cursor={"pointer"}>
-                <Text paddingBottom={"15px"}>{playList.type}</Text>
-                <Heading
-                  fontSize={"60px"}
-                  fontWeight={"bold"}
-                  paddingBottom={"20px"}
-                >
-                  {playList.title}
-                </Heading>
-                <Text color={"gray.300"}>{playList.description}</Text>
-                <Flex
-                  color={"gray.400"}
-                  fontSize={"14px"}
-                  fontWeight={"600"}
-                  pt={"10px"}
-                  gap={"5px"}
-                >
-                  <Image src={ProfilePicture} height={"22px"} />
-                  <Text>
-                    {playList.author} - {playList.songs.length} songs,{" "}
-                    {duration}
-                  </Text>
-                </Flex>
-              </Box>
-            </DialogTrigger>
-            <DialogContent padding={"20px"} backgroundColor={"gray.800"}>
-              <DialogHeader>
-                <DialogTitle>Edit details</DialogTitle>
-              </DialogHeader>
-              <DialogBody>
-                <Flex gap={"20px"} pt={"20px"}>
-                  <Image
-                    src={playList.cover}
-                    width={"200px"}
-                    boxShadow="0 4px 6px rgba(0, 0, 0, 0.3)"
-                    borderRadius={"8px"}
-                  ></Image>
-                  <Box>
-                    <Input
-                      placeholder={playList.title}
-                      bgColor={"gray.700"}
-                      padding={"10px"}
-                      onChange={(e) => setNewPlatlistTitle(e.target.value)}
-                    />
-                    <Textarea
-                      mt={"20px"}
-                      placeholder={playList.description}
-                      bgColor={"gray.700"}
-                      padding={"10px"}
-                      height={"70%"}
-                      onChange={(e) => setNewDescription(e.target.value)}
-                    />
-                  </Box>
-                </Flex>
-              </DialogBody>
-              <DialogFooter>
-                <Button mt={"20px"} width="100px" padding={"20px"} borderRadius={"20px"} onClick={() => updatePlaylistDetail()}>
-                  Save
-                </Button>
-              </DialogFooter>
-              <Text fontSize={"12px"} color={"gray.200"} pt={"10px"}>
-                By proceeding, you agree to give Hipponify access to the image
-                you choose you upload. Please make sure you have the right to
-                upload the image.
-              </Text>
-              <DialogCloseTrigger />
-            </DialogContent>
-          </DialogRoot>
+          {ID == 1 && (
+            <Box>
+              <Text paddingBottom={"15px"}>{playList.type}</Text>
+              <Heading
+                fontSize={"60px"}
+                fontWeight={"bold"}
+                paddingBottom={"20px"}
+              >
+                {playList.title}
+              </Heading>
+              <Text color={"gray.300"}>{playList.description}</Text>
+              <Flex
+                color={"gray.400"}
+                fontSize={"14px"}
+                fontWeight={"600"}
+                pt={"10px"}
+                gap={"5px"}
+              >
+                <Image src={ProfilePicture} height={"22px"} />
+                <Text>
+                  {playList.author} - {playList.songs.length} songs, {duration}
+                </Text>
+              </Flex>
+            </Box>
+          )}
+          {ID != 1 && (
+            <DialogRoot placement={"center"}>
+              <DialogTrigger asChild>
+                <Box cursor={"pointer"}>
+                  <Text paddingBottom={"15px"}>{playList.type}</Text>
+                  <Heading
+                    fontSize={"60px"}
+                    fontWeight={"bold"}
+                    paddingBottom={"20px"}
+                  >
+                    {playList.title}
+                  </Heading>
+                  <Text color={"gray.300"}>{playList.description}</Text>
+                  <Flex
+                    color={"gray.400"}
+                    fontSize={"14px"}
+                    fontWeight={"600"}
+                    pt={"10px"}
+                    gap={"5px"}
+                  >
+                    <Image src={ProfilePicture} height={"22px"} />
+                    <Text>
+                      {playList.author} - {playList.songs.length} songs,{" "}
+                      {duration}
+                    </Text>
+                  </Flex>
+                </Box>
+              </DialogTrigger>
+              <DialogContent padding={"20px"} backgroundColor={"gray.800"}>
+                <DialogHeader>
+                  <DialogTitle>Edit details</DialogTitle>
+                </DialogHeader>
+                <DialogBody>
+                  <Flex gap={"20px"} pt={"20px"}>
+                    <Image
+                      src={playList.cover}
+                      width={"200px"}
+                      boxShadow="0 4px 6px rgba(0, 0, 0, 0.3)"
+                      borderRadius={"8px"}
+                    ></Image>
+                    <Box>
+                      <Input
+                        placeholder={playList.title}
+                        bgColor={"gray.700"}
+                        padding={"10px"}
+                        onChange={(e) => setNewPlatlistTitle(e.target.value)}
+                      />
+                      <Textarea
+                        mt={"20px"}
+                        placeholder={playList.description}
+                        bgColor={"gray.700"}
+                        padding={"10px"}
+                        height={"70%"}
+                        onChange={(e) => setNewDescription(e.target.value)}
+                      />
+                    </Box>
+                  </Flex>
+                </DialogBody>
+                <DialogFooter>
+                  <Button
+                    mt={"20px"}
+                    width="100px"
+                    padding={"20px"}
+                    borderRadius={"20px"}
+                    onClick={() => updatePlaylistDetail()}
+                  >
+                    Save
+                  </Button>
+                </DialogFooter>
+                <Text fontSize={"12px"} color={"gray.200"} pt={"10px"}>
+                  By proceeding, you agree to give Hipponify access to the image
+                  you choose you upload. Please make sure you have the right to
+                  upload the image.
+                </Text>
+                <DialogCloseTrigger />
+              </DialogContent>
+            </DialogRoot>
+          )}
         </Flex>
         <Box paddingTop={"20px"}>
           <Button
