@@ -6,7 +6,6 @@ export const playListMockUp = [
     description: "All Song in Hello World Hippo",
     author: "Hipponify",
     ID: 1,
-    role: "User",
     type: "Public Playlist",
     songs: [
       {
@@ -49,7 +48,6 @@ export const playListMockUp = [
     ID: 2,
     type: "Private Playlist",
     author: "Me",
-    role: "User",
     songs: [
       {
         title: "Binding Lights",
@@ -71,7 +69,6 @@ export const playListMockUp = [
     ID: "admin",
     type: "Public Playlist",
     author: "Hipponify",
-    role: "Admin",
     songs: [
       {
         title: "Binding Lights",
