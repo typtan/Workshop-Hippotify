@@ -6,7 +6,6 @@ export const playListMockUp = [
     description: "All Song in Hello World Hippo",
     author: "Hipponify",
     ID: 1,
-    role: "User",
     type: "Public Playlist",
     songs: [
       {
@@ -49,7 +48,6 @@ export const playListMockUp = [
     ID: 2,
     type: "Private Playlist",
     author: "Me",
-    role: "User",
     songs: [
       {
         title: "Binding Lights",
@@ -60,38 +58,6 @@ export const playListMockUp = [
         dateAdded: "2021-09-01",
         duration: 213,
         ID: 1,
-      },
-    ],
-  },
-  {
-    title: "Top Songs",
-    cover:
-      "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da849d25907759522a25b86a3033",
-    description: "Top 100 song in the world",
-    ID: "admin",
-    type: "Public Playlist",
-    author: "Hipponify",
-    role: "Admin",
-    songs: [
-      {
-        title: "Binding Lights",
-        cover:
-          "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da849d25907759522a25b86a3033",
-        singer: "The Weeknd",
-        album: "Binding Lights",
-        dateAdded: "2021-09-01",
-        duration: 213,
-        ID: 1,
-      },
-      {
-        title: "Out of Time",
-        cover:
-          "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da849d25907759522a25b86a3033",
-        singer: "The Weeknd",
-        album: "After Hours",
-        dateAdded: "2021-09-11",
-        duration: 213,
-        ID: 2,
       },
     ],
   },

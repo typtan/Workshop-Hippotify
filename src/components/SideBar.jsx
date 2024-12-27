@@ -2,11 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { Flex, Box, Image } from "@chakra-ui/react";
 import { Button } from "./ui/button";
 
-import { playListMockUp } from "./MockUpData";
+import { playListMockUp } from "../MockUpData";
 
 export default function SideBar() {
   const navigate = useNavigate();
-  const playList = playListMockUp.filter((item) => item.role === "User");
   return (
     <Box backgroundColor={"black"}>
       <Box
@@ -22,7 +21,7 @@ export default function SideBar() {
           gap={"20px"}
           justifyContent={"flex-start"}
         >
-          {playList.map((item, index) => (
+          {playListMockUp.map((item, index) => (
             <Box>
               <Button
                 key={index}

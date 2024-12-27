@@ -24,7 +24,7 @@ import ProfilePicture from "../../public/assets/images/UserProfilePicture.png";
 
 import { Button } from "../components/ui/button";
 import SongCard from "../components/SongCard";
-import { playListMockUp } from "../components/MockUpData";
+import { playListMockUp } from "../MockUpData";
 
 import { timeFormatHMS } from "../utils/timeFormatChange";
 
