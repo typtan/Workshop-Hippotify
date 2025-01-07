@@ -1,19 +1,23 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import Playlist from "./pages/Playlist";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "*",
+    element: <Navigate to="/playlist" replace />,
+  },
+  {
+    path: "/playlist",
     element: <App />,
     children: [
       {
-        path: "",
+        path: "/playlist",
         element: <Playlist />,
       },
       {
-        path: ":id",
+        path: "/playlist/:id",
         element: <Playlist />,
       },
     ],

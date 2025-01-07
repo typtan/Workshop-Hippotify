@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { Flex, Box, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { Button } from "./ui/button";
-
-import ProfilePicture from "../../public/assets/images/UserProfilePicture.png"
 
 import { FaChevronLeft } from "react-icons/fa6";
 import { GrHomeRounded } from "react-icons/gr";
 import { FiSearch } from "react-icons/fi";
+import profile from "../../public/assets/images/UserProfilePicture.png";
 
-export default function Navigation() {
+export default function Navigation({ user }) {
   const navigate = useNavigate();
+
   return (
     <Flex
       justifyContent={"space-between"}
@@ -26,7 +26,7 @@ export default function Navigation() {
           variant="subtle"
           borderRadius="100%"
           padding="10px"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/playlist")}
         >
           <GrHomeRounded color="gray" />
         </Button>
@@ -42,9 +42,7 @@ export default function Navigation() {
           What do you want to play?
         </Button>
       </Flex>
-      <Flex>
-        <Image src={ProfilePicture} width={"40px"} cursor={"pointer"}/>
-      </Flex>
+      <Image src={profile} width={"40px"} />
     </Flex>
   );
 }

@@ -5,11 +5,26 @@ import Navigation from "./components/Navigation";
 import SideBar from "./components/SideBar";
 import MusicPlayer from "./components/MusicPlayer";
 
-export default function App() {
+import { useEffect, useState } from "react";
+
+function App() {
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [user, setUser] = useState();
+
+  const fetchUserData = async () => {
+    // insert you code here
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const handleTrackChange = (track) => {
+    setCurrentTrack(track);
+  };
   return (
     <>
       <Box as="nav" position="fixed" top="0" left="0" right="0" zIndex="1000">
-        <Navigation />
+        <Navigation user={user} />
       </Box>
       <Flex pt="60px" pb="60px" height="100vh" overflow="hidden">
         <Box
@@ -29,7 +44,7 @@ export default function App() {
           height="calc(100vh - 140px)"
           overflowY="auto"
         >
-          <Outlet />
+          <Outlet context={{ handleTrackChange }} />
         </Box>
       </Flex>
       <Box
@@ -40,8 +55,10 @@ export default function App() {
         bottom="0"
         height="70px"
       >
-        <MusicPlayer />
+        <MusicPlayer currentTrack={currentTrack} />
       </Box>
     </>
   );
 }
+
+export default App;

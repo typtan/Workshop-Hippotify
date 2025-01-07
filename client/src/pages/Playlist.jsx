@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Text,
   Heading,
@@ -8,6 +7,8 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
+import { FaRegClock, FaPlay } from "react-icons/fa6";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -18,28 +19,42 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog";
-import { FaRegClock, FaPlay } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
-import ProfilePicture from "../../public/assets/images/UserProfilePicture.png";
 
 import { Button } from "../components/ui/button";
-import SongCard from "../components/SongCard";
-import { playListMockUp } from "../MockUpData";
-
-import { timeFormatHMS } from "../utils/timeFormatChange";
+import TrackCard from "../components/TrackCard";
+import { useEffect, useState } from "react";
+import { playlistMockUp } from "../services/MockUpData";
 
 export default function Playlist() {
-  const ID = useParams().id ? useParams().id : 1;
-  const [newPlaylistTitle, setNewPlatlistTitle] = useState("");
+  const id = useParams().id;
+  const [playlist, setPlaylist] = useState([]);
+  const [ownedPlaylist, setOwnedPlaylist] = useState([]);
+  const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const navigate = useNavigate();
+  const { handleTrackChange } = useOutletContext();
 
-  const playList = playListMockUp.find((item) => item.ID === parseInt(ID));
-  const duration = timeFormatHMS(
-    playList.songs.reduce((acc, cur) => acc + cur.duration, 0)
-  );
+  const fetchOwnedPlaylistData = async () => {
+    // insert your code here
+    const fetchedOwnedPlaylist = playlistMockUp.filter((item) => item.id != 1);
+    setOwnedPlaylist(fetchedOwnedPlaylist);
+  };
+  const fetchPlaylistData = async () => {
+    // insert your code here
+    const fetchedPlaylist = playlistMockUp.find((item) => item.id == id);
+    setPlaylist(fetchedPlaylist); 
+  };
+  useEffect(() => {
+    fetchPlaylistData();
+    fetchOwnedPlaylistData();
+  }, [id]);
 
-  const updatePlaylistDetail = () => {
-    console.log("Update playlist detail", newPlaylistTitle, newDescription);
+  const updatePlaylistData = async () => {
+    // insert your code here
+  };
+
+  const handleTrackRemoval = () => {
+    // fetchPlaylistData();
   };
 
   return (
@@ -58,22 +73,22 @@ export default function Playlist() {
           align={{ base: "center", lg: "end" }}
         >
           <Image
-            src={playList.cover}
+            src={playlist.cover}
             width={"200px"}
             boxShadow="0 4px 6px rgba(0, 0, 0, 0.3)"
             borderRadius={"8px"}
           ></Image>
-          {ID == 1 && (
+          {!playlist?.edit_access && (
             <Box>
-              <Text paddingBottom={"15px"}>{playList.type}</Text>
+              <Text paddingBottom={"15px"}>{playlist.type}</Text>
               <Heading
                 fontSize={"60px"}
                 fontWeight={"bold"}
                 paddingBottom={"20px"}
               >
-                {playList.title}
+                {playlist.title}
               </Heading>
-              <Text color={"gray.300"}>{playList.description}</Text>
+              <Text color={"gray.300"}>{playlist.description}</Text>
               <Flex
                 color={"gray.400"}
                 fontSize={"14px"}
@@ -81,26 +96,27 @@ export default function Playlist() {
                 pt={"10px"}
                 gap={"5px"}
               >
-                <Image src={ProfilePicture} height={"22px"} />
+                <Image src={playlist.image_url} height={"22px"} />
                 <Text>
-                  {playList.author} - {playList.songs.length} songs, {duration}
+                  {playlist.author} - {playlist.tracks?.length} songs,{" "}
+                  {playlist.duration}
                 </Text>
               </Flex>
             </Box>
           )}
-          {ID != 1 && (
+          {playlist?.edit_access && (
             <DialogRoot placement={"center"}>
               <DialogTrigger asChild>
-                <Box cursor={"pointer"}>
-                  <Text paddingBottom={"15px"}>{playList.type}</Text>
+                <Box>
+                  <Text paddingBottom={"15px"}>{playlist.type} Playlist</Text>
                   <Heading
                     fontSize={"60px"}
                     fontWeight={"bold"}
                     paddingBottom={"20px"}
                   >
-                    {playList.title}
+                    {playlist.title}
                   </Heading>
-                  <Text color={"gray.300"}>{playList.description}</Text>
+                  <Text color={"gray.300"}>{playlist.description}</Text>
                   <Flex
                     color={"gray.400"}
                     fontSize={"14px"}
@@ -108,10 +124,10 @@ export default function Playlist() {
                     pt={"10px"}
                     gap={"5px"}
                   >
-                    <Image src={ProfilePicture} height={"22px"} />
+                    <Image src={playlist.image_url} height={"22px"} />
                     <Text>
-                      {playList.author} - {playList.songs.length} songs,{" "}
-                      {duration}
+                      {playlist.author} - {playlist.tracks?.length} songs,{" "}
+                      {playlist.duration}
                     </Text>
                   </Flex>
                 </Box>
@@ -123,24 +139,26 @@ export default function Playlist() {
                 <DialogBody>
                   <Flex gap={"20px"} pt={"20px"}>
                     <Image
-                      src={playList.cover}
+                      src={playlist.cover}
                       width={"200px"}
                       boxShadow="0 4px 6px rgba(0, 0, 0, 0.3)"
                       borderRadius={"8px"}
                     ></Image>
                     <Box>
                       <Input
-                        placeholder={playList.title}
+                        placeholder={playlist.title}
                         bgColor={"gray.700"}
                         padding={"10px"}
-                        onChange={(e) => setNewPlatlistTitle(e.target.value)}
+                        value={newTitle}
+                        onChange={(e) => setNewTitle(e.target.value)}
                       />
                       <Textarea
                         mt={"20px"}
-                        placeholder={playList.description}
+                        placeholder={playlist.description}
                         bgColor={"gray.700"}
                         padding={"10px"}
                         height={"70%"}
+                        value={newDescription}
                         onChange={(e) => setNewDescription(e.target.value)}
                       />
                     </Box>
@@ -152,7 +170,7 @@ export default function Playlist() {
                     width="100px"
                     padding={"20px"}
                     borderRadius={"20px"}
-                    onClick={() => updatePlaylistDetail()}
+                    onClick={() => updatePlaylistData()}
                   >
                     Save
                   </Button>
@@ -190,16 +208,20 @@ export default function Playlist() {
             <Flex width={"3%"} justifyContent={"end"}>
               <FaRegClock />
             </Flex>
-            <Button
-              width={"2%"}
-              variant="plain"
-              cursor={"context-menu"}
-            ></Button>
           </Flex>
           <Box height={"1.5px"} bgColor={"gray.600"}></Box>
           <Box pt={"16px"}>
-            {playList.songs.map((item, index) => (
-              <SongCard ID={ID} song={item} index={index} />
+            {playlist.tracks?.map((track, index) => (
+              <TrackCard
+                key={track.id}
+                id={playlist.id}
+                isOwned={playlist.edit_access}
+                track={track}
+                index={index}
+                ownedPlaylist={ownedPlaylist}
+                onRemove={handleTrackRemoval}
+                onTrackClick={handleTrackChange}
+              />
             ))}
           </Box>
         </Box>
