@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 import { playlistMockUp } from "../services/MockUpData";
 
 export default function Playlist() {
-  const id = useParams().id;
+  const id = useParams().id || 1;
   const [playlist, setPlaylist] = useState([]);
   const [ownedPlaylist, setOwnedPlaylist] = useState([]);
   const [newTitle, setNewTitle] = useState("");
