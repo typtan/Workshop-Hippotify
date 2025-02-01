@@ -9,6 +9,7 @@ import {
 } from "./ui/popover";
 import { FaEllipsisVertical, FaPlus } from "react-icons/fa6";
 import { SlTrash } from "react-icons/sl";
+import { addTrackToPlaylist, removeTrackFromPlaylist } from "../services/playlistService";
 
 export default function TrackCard({
   id,
@@ -23,10 +24,16 @@ export default function TrackCard({
 
   const handleAddTrack = async (playlistId) => {
     // insert your code here
+    const response = await addTrackToPlaylist(playlistId,track.track_id)
+    if(response.success){
+      alert("added")
+    }
   };
 
-  const handleRemoveTrack = async () => {
+  const handleRemoveTrack = async (playlistId) => {
     // insert your code here
+    const response = await removeTrackFromPlaylist(playlistId,track.id)
+    if(response.response)
   };
   
   return (
